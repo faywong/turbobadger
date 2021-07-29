@@ -76,7 +76,7 @@ public:
 	TBStr(const char* str);
 	TBStr(const char* str, int len);
 #ifdef TB_LIBSTD
-	TBStr(const std::string & str) : TBStr(str.c_str(), str.size()) {}
+	TBStr(const std::string & str) : TBStr(str.c_str(), (int)str.size()) {}
 #endif
 
 	bool Set(TBStr str) { *this = str; return true; }
