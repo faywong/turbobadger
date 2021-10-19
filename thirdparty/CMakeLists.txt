@@ -2,7 +2,7 @@
 # CMake file for turbobadger dependencies
 #
 
-cmake_minimum_required (VERSION 3.11.3)
+cmake_minimum_required (VERSION 3.10.2)
 project (turbobadger_thirdparty NONE)
 
 include (ExternalProject)

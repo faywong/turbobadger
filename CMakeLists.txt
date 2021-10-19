@@ -5,7 +5,7 @@ if (APPLE)
   set (CMAKE_OSX_DEPLOYMENT_TARGET "11.3")
 endif ()
 
-cmake_minimum_required (VERSION 3.4.3)
+cmake_minimum_required (VERSION 3.10.2)
 include (CheckCXXCompilerFlag)
 if (POLICY CMP0114)
   # for XCode12
