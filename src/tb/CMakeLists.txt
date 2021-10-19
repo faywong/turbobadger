@@ -124,6 +124,10 @@ if (TB_SYSTEM STREQUAL WINDOWS)
   target_link_libraries (TurboBadgerLib PUBLIC GLEW::GLEW)
 endif ()
 
+if (APPLE)
+  target_compile_definitions (TurboBadgerLib PRIVATE GL_SILENCE_DEPRECATION)
+endif ()
+
 if (TB_FONT_RENDERER STREQUAL FREETYPE)
   target_link_libraries (TurboBadgerLib PUBLIC freetype)
 endif ()

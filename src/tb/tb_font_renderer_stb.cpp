@@ -23,15 +23,15 @@ public:
 	STBFontRenderer();
 	~STBFontRenderer();
 
-	bool Load(const char *filename, int size);
-
-	virtual TBFontFace *Create(TBFontManager *font_manager, const char *filename,
+	virtual TBFontFace *Create(TBFontManager *font_manager, const TBStr & filename,
 								const TBFontDescription &font_desc);
 
 	virtual TBFontMetrics GetMetrics();
 	virtual bool RenderGlyph(TBFontGlyphData *dst_bitmap, UCS4 cp);
 	virtual void GetGlyphMetrics(TBGlyphMetrics *metrics, UCS4 cp);
 private:
+	bool Load(const TBStr & filename, int size);
+
 	stbtt_fontinfo font;
 	TBTempBuffer ttf_buffer;
 	unsigned char *render_data;
@@ -81,7 +81,7 @@ void STBFontRenderer::GetGlyphMetrics(TBGlyphMetrics *metrics, UCS4 cp)
 	metrics->y = iy0;
 }
 
-bool STBFontRenderer::Load(const char *filename, int size)
+bool STBFontRenderer::Load(const TBStr & filename, int size)
 {
 	if (!ttf_buffer.AppendFile(filename))
 		return false;
@@ -94,7 +94,7 @@ bool STBFontRenderer::Load(const char *filename, int size)
 	return true;
 }
 
-TBFontFace *STBFontRenderer::Create(TBFontManager *font_manager, const char *filename, const TBFontDescription &font_desc)
+TBFontFace *STBFontRenderer::Create(TBFontManager *font_manager, const TBStr &filename, const TBFontDescription &font_desc)
 {
 	if (STBFontRenderer *fr = new STBFontRenderer())
 	{

@@ -1,8 +1,16 @@
 #
 # CMake file for hastybadger
 #
+if (APPLE)
+  set (CMAKE_OSX_DEPLOYMENT_TARGET "11.3")
+endif ()
+
 cmake_minimum_required (VERSION 3.4.3)
 include (CheckCXXCompilerFlag)
+if (POLICY CMP0114)
+  # for XCode12
+  cmake_policy (SET CMP0114 NEW)
+endif()
 set (CMAKE_CXX_STANDARD 14)
 set (CMAKE_DISABLE_IN_SOURCE_BUILD ON)
 set (CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
@@ -75,6 +83,7 @@ if (WIN32)
 endif ()
 
 if (APPLE)
+  set (CMAKE_OSX_DEPLOYMENT_TARGET "11.3")
   if (IOS)
     set (TB_SYSTEM_DEFAULT IOS)
     set (TB_RENDERER_DEFAULT GLES_2)
@@ -331,6 +340,7 @@ if (${TB_BUILD_DEMO} STREQUAL ANDROID)
     ./DemoAndroid/app/src/main/jni/App.cpp
     )
   target_link_libraries (TurboBadger TurboBadgerLib)
+
   set_property (TARGET TurboBadger APPEND PROPERTY ANDROID_ASSETS_DIRECTORIES
     "${CMAKE_CURRENT_SOURCE_DIR}/resources/language"
     "${CMAKE_CURRENT_SOURCE_DIR}/resources/default_skin")
