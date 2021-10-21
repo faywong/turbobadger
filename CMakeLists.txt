@@ -18,7 +18,7 @@ set (CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 set (TB_VERSION_MAJOR "0")
 set (TB_VERSION_MINOR "1")
 set (TB_VERSION_PATCH "0")
-set (TB_VERSION_BUILD "-beta7") # ie "-beta1", or empty string if release: ""
+set (TB_VERSION_BUILD "-beta8") # ie "-beta1", or empty string if release: ""
 set (TB_VERSION "${TB_VERSION_MAJOR}.${TB_VERSION_MINOR}.${TB_VERSION_PATCH}")
 
 #
