@@ -206,6 +206,15 @@ TBRendererGL::TBRendererGL()
 		"  gl_FragColor = color * texture2D(tex, uvo); \n"
 		"}                                             \n";
 
+#if defined(TB_SYSTEM_WINDOWS)
+	GLenum err = glewInit();
+	if (GLEW_OK != err)
+	{
+		TBDebugOut("glewInit failed.\n");
+		return;
+	}
+#endif
+
 	GLuint vertexShader;
 	GLuint fragmentShader;
 	GLint linked;
