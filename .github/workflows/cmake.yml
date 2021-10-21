@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - hastybadger
   pull_request:
     branches:
       - master
