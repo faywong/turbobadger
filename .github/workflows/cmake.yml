@@ -8,6 +8,7 @@ on:
   pull_request:
     branches:
       - master
+      - hastybadger
 jobs:
   build:
     # see also https://gist.github.com/NickNaso/0d478f1481686d5bcc868cac06620a60
