@@ -92,7 +92,7 @@ jobs:
             -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }} \
             -G "${{ matrix.config.generators }}" \
             -DCMAKE_INSTALL_PREFIX:PATH=instdir \
-            -DTB_RENDERER=GL -DTB_BUILD_DEMO=GLFW
+            -DTB_RENDERER=GL -DTB_BUILD_DEMO=GLFW -DTB_BUILD_GLFW=ON
           pwd
           ls -l
 
@@ -113,12 +113,12 @@ jobs:
         with:
           name: Package ${{ matrix.config.name }}
           path: |
-            build/SpinDrops*install-win32.exe
-            build/SpinDrops*install-win32.zip
-            build/SpinDrops*.dmg
-            build/SpinDrops*.deb
-            build/SpinDrops*.rpm
-            build/SpinDrops*.tar.gz
+            build/TurboBadgerDemo-*install-win32.exe
+            build/TurboBadgerDemo-*install-win32.zip
+            build/TurboBadgerDemo-*.dmg
+            build/TurboBadgerDemo-*.deb
+            build/TurboBadgerDemo-*.rpm
+            build/TurboBadgerDemo-*.tar.gz
 
     # - name: Test
     #   working-directory: ${{runner.workspace}}/build
