@@ -15,7 +15,7 @@ commentary are welcome!
 
 Current CircleCI build status: [![CircleCI](https://circleci.com/gh/tesch1/turbobadger/tree/hastybadger.svg?style=svg)](https://circleci.com/gh/tesch1/turbobadger/tree/hastybadger)
 
-Current TravisCI build status: [![Build Status](https://travis-ci.com/tesch1/turbobadger.svg?branch=hastybadger)](https://travis-ci.com/tesch1/turbobadger)
+Current Github Actions build status: ![Github Actions](https://github.com/tesch1/turbobadger/actions/workflows/cmake.yml/badge.svg)
 
 Binaries of the demo programs for most platforms (macOS, Linux,
 Windows) are available on the

@@ -2,7 +2,7 @@
 # CMake file for turbobadger dependencies
 #
 
-cmake_minimum_required (VERSION 3.4.3)
+cmake_minimum_required (VERSION 3.10.2)
 project (turbobadger_thirdparty NONE)
 
 include (ExternalProject)
@@ -31,14 +31,16 @@ if (hasParent)
   else ()
     set (CMAKE_FRAMEWORK_PATH "${CMAKE_SOURCE_DIR}/Frameworks.macOS")
   endif ()
-endif (hasParent)
+endif ()
 
 if (TB_BUILD_GLFW)
   # Download glfw
   ExternalProject_Add (GLFWEXT
     PREFIX GLFWEXT
-    URL https://github.com/glfw/glfw/archive/3.3.tar.gz
-    URL_HASH MD5=5be03812f5d109817e6558c3fab7bbe1
+    # URL https://github.com/glfw/glfw/archive/3.3.tar.gz
+    # URL_HASH MD5=5be03812f5d109817e6558c3fab7bbe1
+    URL https://github.com/glfw/glfw/archive/refs/tags/3.3.4.tar.gz
+    URL_HASH MD5=8f8e5e931ef61c6a8e82199aabffe65a
     DOWNLOAD_DIR "${DOWNLOAD_DIR}"
     #GIT_REPOSITORY "https://github.com/glfw/glfw.git"
     #GIT_TAG "3.3"

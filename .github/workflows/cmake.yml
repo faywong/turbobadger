@@ -1,0 +1,146 @@
+name: CMake
+
+on:
+  push:
+    branches:
+      - master
+      - hastybadger
+  pull_request:
+    branches:
+      - master
+      - hastybadger
+jobs:
+  build:
+    # see also https://gist.github.com/NickNaso/0d478f1481686d5bcc868cac06620a60
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+    env:
+      # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+      BUILD_TYPE: Release
+    strategy:
+      # fail-fast: false
+      matrix:
+        config:
+        - {
+            name: "Windows Latest MSVC",
+            os: windows-latest,
+            build_type: "Release",
+            generators: "Visual Studio 16 2019"
+          }
+        # - {
+        #     name: "Ubuntu_Latest_GCC",
+        #     os: ubuntu-latest,
+        #     build_type: "Release",
+        #     generators: "Unix Makefiles"
+        #   }
+        # - {
+        #     name: "macOS Latest Clang",
+        #     os: macos-latest,
+        #     build_type: "Release",
+        #     generators: "Xcode"
+        #   }
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Print env
+        run: |
+          echo github.event.action: ${{ github.event.action }}
+          echo github.event_name: ${{ github.event_name }}
+      - name: Install dependencies on windows
+        if: startsWith(matrix.config.os, 'windows')
+        run: |
+          choco install cmake
+          choco install nsis 7zip
+          cmake --version
+        # choco install visualstudio2019buildtools --package-parameters "--includeRecommended --includeOptional"
+        # choco install visualstudio2019-workload-vctools
+
+      - name: Install dependencies on ubuntu
+        if: startsWith(matrix.config.name, 'Ubuntu_Latest_GCC')
+        run: |
+          sudo apt-get update
+          sudo apt-get install cmake
+          cmake --version
+          gcc --version
+          sudo apt-get install libglu1-mesa-dev libegl1-mesa libgl1-mesa-dri libopenblas-dev rpm
+          
+      - name: Install dependencies on macos
+        if: startsWith(matrix.config.os, 'macos')
+        run: |
+          brew install cmake
+          cmake --version
+
+      - name: Get processor count
+        id: get_env
+        shell: cmake -P {0}
+        run: |
+          include(ProcessorCount)
+          ProcessorCount(NCPU)
+          message("ncpu=${NCPU}")
+          message("::set-output name=ncpu::${NCPU}")
+
+      - name: Configure
+        shell: bash
+        run: |
+          echo "ncpu=${{ steps.get_env.outputs.ncpu }}"
+          mkdir build
+          mkdir instdir
+          cmake \
+            -S . \
+            -B build \
+            -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }} \
+            -G "${{ matrix.config.generators }}" \
+            -DCMAKE_INSTALL_PREFIX:PATH=instdir \
+            -DTB_RENDERER=GL -DTB_BUILD_DEMO=GLFW -DTB_BUILD_GLFW=ON
+          pwd
+          ls -l
+
+      - name: Build
+        shell: bash
+        run: |
+          cmake \
+            --build build \
+            --config ${{ matrix.config.build_type }} \
+            --target package \
+            -j ${{ steps.get_env.outputs.ncpu }}
+          pwd
+          ls -l
+          ls -l build
+
+      - name: Upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: Package ${{ matrix.config.name }}
+          path: |
+            build/TurboBadgerDemo-*install-win32.exe
+            build/TurboBadgerDemo-*install-win32.zip
+            build/TurboBadgerDemo-*.dmg
+            build/TurboBadgerDemo-*.deb
+            build/TurboBadgerDemo-*.rpm
+            build/TurboBadgerDemo-*.tar.gz
+
+    # - name: Test
+    #   working-directory: ${{runner.workspace}}/build
+    #   shell: bash
+    #   # Execute tests defined by the CMake configuration.  
+    #   # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
+    #   run: ctest -C $BUILD_TYPE --output-on-failure
+    
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          path: artifacts
+      - run: |
+          ls -R artifacts
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            artifacts/*
