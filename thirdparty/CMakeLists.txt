@@ -11,6 +11,7 @@ get_directory_property (hasParent PARENT_DIRECTORY)
 if (CMAKE_XCODE_BUILD_SYSTEM VERSION_GREATER_EQUAL 12)
   cmake_policy (SET CMP0114 NEW)
 endif ()
+cmake_policy (SET CMP0135 NEW)
 
 if (NOT WIN32)
   set (DOWNLOAD_DIR "$ENV{HOME}/Downloads")
