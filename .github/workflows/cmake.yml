@@ -41,7 +41,7 @@ jobs:
         #   }
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout
+      - uses: actions/checkout@v3
         with:
           submodules: true
       - name: Print env
@@ -110,7 +110,7 @@ jobs:
           ls -l build
 
       - name: Upload
-        uses: actions/upload-artifact
+        uses: actions/upload-artifact@v3
         with:
           name: Package ${{ matrix.config.name }}
           path: |
@@ -134,7 +134,7 @@ jobs:
     name: Create Release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact
+      - uses: actions/download-artifact@v3
         with:
           path: artifacts
       - run: |
