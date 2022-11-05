@@ -257,8 +257,10 @@ endif (TB_BUILD_FREETYPE)
 if (WIN32)
   ExternalProject_Add (GLEWX
     PREFIX GLEWX
-    URL "https://sourceforge.net/projects/glew/files/glew/2.1.0/glew-2.1.0-win32.zip"
-    URL_HASH MD5=32a72e6b43367db8dbea6010cd095355
+    #URL "https://sourceforge.net/projects/glew/files/glew/2.1.0/glew-2.1.0-win32.zip"
+    #URL_HASH MD5=32a72e6b43367db8dbea6010cd095355
+    URL "https://github.com/nigels-com/glew/releases/download/glew-2.2.0/glew-2.2.0-win32.zip"
+    URL_HASH MD5=1feddfe8696c192fa46a0df8eac7d4bf
     DOWNLOAD_DIR ${DOWNLOAD_DIR}
     UPDATE_COMMAND ""
     PATCH_COMMAND ""
