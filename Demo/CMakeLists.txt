@@ -68,8 +68,6 @@ if (APPLE)
   message (STATUS "Xcode development team: '$ENV{APPLE_DEVTEAM_ID}' (Cached: ${APPLE_DEVTEAM_ID})")
   if (IOS)
     set_target_properties (TurboBadgerDemo PROPERTIES
-      XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer"
-      XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "${APPLE_DEVTEAM_ID}"
       XCODE_ATTRIBUTE_INSTALL_PATH "$(LOCAL_APPS_DIR)"
       XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon"
       MACOSX_BUNDLE_GUI_IDENTIFIER "org.hastybadger.demo"
@@ -109,8 +107,6 @@ if (APPLE)
 ")
   else ()
     set_target_properties (TurboBadgerDemo PROPERTIES
-      XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY ""
-      XCODE_ATTRIBUTE_DEVELOPMENT_TEAM ""
       XCODE_ATTRIBUTE_INSTALL_PATH "$(LOCAL_APPS_DIR)"
       MACOSX_BUNDLE_GUI_IDENTIFIER "org.hastybadger.demo"
       MACOSX_BUNDLE_ICON_FILE "hastybadgerdemo.icns"
@@ -125,12 +121,16 @@ if (APPLE)
 	<key>NSHighResolutionCapable</key>
 	<string>True</string>
 ")
-    if (NOT ${APPLE_DEVTEAM_ID} STREQUAL "")
-      set_target_properties (TurboBadgerDemo PROPERTIES
-        XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "Mac Developer"
-        XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "${APPLE_DEVTEAM_ID}")
-    endif ()
   endif (IOS)
+
+  # set dev team
+  if (NOT "${APPLE_DEVTEAM_ID}" STREQUAL "")
+    set_target_properties (TurboBadgerDemo PROPERTIES
+      XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "Mac Developer"
+      XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "${APPLE_DEVTEAM_ID}"
+    )
+  endif ()
+
 endif (APPLE)
 
 install (TARGETS TurboBadgerDemo
