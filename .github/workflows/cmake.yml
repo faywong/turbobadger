@@ -79,7 +79,7 @@ jobs:
           include(ProcessorCount)
           ProcessorCount(NCPU)
           message("ncpu=${NCPU}")
-          file(APPEND $GITHUB_OUTPUT "ncup=${NCPU}")
+          file(APPEND $ENV{GITHUB_OUTPUT} "ncup=${NCPU}")
 
       - name: Configure
         shell: bash
