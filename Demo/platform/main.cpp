@@ -13,7 +13,7 @@
 #endif
 #ifdef TB_SYSTEM_LINUX
 #include <unistd.h>
-#include <sys/auxv.h>
+//#include <sys/auxv.h>
 #endif
 #ifdef TB_SYSTEM_WINDOWS
 #include <tchar.h>
@@ -39,7 +39,7 @@ using namespace tb;
 
 bool port_main(int argc, char* argv[])
 {
-#if defined(TB_BACKEND_SDL2) && !defined(__EMSCRIPTEN__)
+#if defined(TB_BACKEND_SDL2) && defined(__EMSCRIPTEN__)
 	if (char *base_path = SDL_GetBasePath())
 	{
 #if !TARGET_OS_IPHONE
