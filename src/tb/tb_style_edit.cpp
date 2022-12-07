@@ -667,6 +667,7 @@ TBTextProps::TBTextProps(const TBFontDescription &font_desc, const TBColor &text
 	base_data.font_desc = font_desc;
 	base_data.text_color = text_color;
 	base_data.underline = false;
+	base_data.strikethrough = false;
 	data = &base_data;
 }
 
@@ -678,6 +679,7 @@ TBTextProps::Data *TBTextProps::Push()
 		new_data->font_desc = data->font_desc;
 		new_data->text_color = data->text_color;
 		new_data->underline = data->underline;
+		new_data->strikethrough = data->strikethrough;
 		data = new_data;
 		return data;
 	}
@@ -1262,7 +1264,11 @@ void TBTextFragment::Paint(int32_t translate_x, int32_t translate_y, TBTextProps
 		int line_h = font->GetHeight() / 16;
 		line_h = MAX(line_h, 1);
 		listener->DrawRectFill(TBRect(x, y + GetBaseline(font) + 1, GetWidth(font), line_h), color);
-	}
+	} else if (props->data->strikethrough) {
+        int line_h = font->GetHeight() / 16;
+        line_h = MAX(line_h, 1);
+        listener->DrawRectFill(TBRect(x, y + GetHeight(font) / 2 , GetWidth(font), line_h), color);
+    }
 }
 
 void TBTextFragment::Click(int button, uint32_t modifierkeys)

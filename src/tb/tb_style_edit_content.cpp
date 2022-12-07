@@ -36,7 +36,9 @@ TBTextFragmentContent *TBTextFragmentContentFactory::CreateFragmentContent(const
 		return new TBTextFragmentContentHR(100, 2);
 	else if (strncmp(text, "<u>", text_len) == 0)
 		return new TBTextFragmentContentUnderline();
-	else if (strncmp(text, "<sup>", text_len) == 0)
+	else if (strncmp(text, "<s>", text_len) == 0)
+        return new TBTextFragmentContentStrikethrough();
+    else if (strncmp(text, "<sup>", text_len) == 0)
 		return new TBTextFragmentContentSuperscript();
 	else if (strncmp(text, "<sub>", text_len) == 0)
 		return new TBTextFragmentContentSubscript();
@@ -99,6 +101,12 @@ void TBTextFragmentContentUnderline::Paint(TBTextFragment * /*fragment*/, int32_
 {
 	if (TBTextProps::Data *data = props->Push())
 		data->underline = true;
+}
+
+void TBTextFragmentContentStrikethrough::Paint(TBTextFragment * /*fragment*/, int32_t /*translate_x*/, int32_t /*translate_y*/, TBTextProps * props)
+{
+    if (TBTextProps::Data *data = props->Push())
+        data->strikethrough = true;
 }
 
 void TBTextFragmentContentTextColor::Paint(TBTextFragment * /*fragment*/, int32_t /*translate_x*/, int32_t /*translate_y*/, TBTextProps * props)

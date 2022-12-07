@@ -59,6 +59,17 @@ public:
 	virtual bool GetAllowBreakAfter() { return false; }
 };
 
+/** Fragment content that enables strikethrough in a TBStyleEdit */
+
+    class TBTextFragmentContentStrikethrough : public TBTextFragmentContent
+    {
+    public:
+        TBTextFragmentContentStrikethrough() {}
+        virtual void Paint(TBTextFragment *fragment, int32_t translate_x, int32_t translate_y, TBTextProps *props);
+        virtual bool GetAllowBreakBefore() { return true; }
+        virtual bool GetAllowBreakAfter() { return false; }
+    };
+
 /** Fragment content that changes color in a TBStyleEdit */
 
 class TBTextFragmentContentTextColor : public TBTextFragmentContent

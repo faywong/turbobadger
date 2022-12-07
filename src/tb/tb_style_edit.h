@@ -152,6 +152,7 @@ public:
 		TBFontDescription font_desc;
 		TBColor text_color;
 		bool underline;
+		bool strikethrough;
 	};
 	TBTextProps(const TBFontDescription &font_desc, const TBColor &text_color);
 
